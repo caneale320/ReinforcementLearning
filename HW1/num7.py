@@ -59,6 +59,7 @@ def simulate():
     # if number is between second prob and 1 set current state to third state
     # return current state
 simulate()
+
 print(statesVisited, totalReward)
 
 """

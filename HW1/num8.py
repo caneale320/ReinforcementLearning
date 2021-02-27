@@ -70,6 +70,7 @@ def simulate():
 
 print(statesVisited, totalReward)
 
+
 """
 Episode 1:
 States: ['Class 1', 'Class 2', 'Class 3', 'Pass', 'Sleep'] 
