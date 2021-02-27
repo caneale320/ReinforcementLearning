@@ -32,6 +32,7 @@ statePolicyDict = {"Class 1":
                  {"Class 1": [(0, 1), -2]}
              }
 
+
 # intialize episodic reward counter
 global totalReward
 totalReward = 0

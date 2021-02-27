@@ -51,13 +51,7 @@ def simulate():
         currentState = nextState(currentState)
         statesVisited.append(currentState)
 
-    # check current state
-    # generate a random number
-    # if the number is between 0 and first prob set current state to first state
-        #
-    # if number is between first prob and second prob set current state to second state
-    # if number is between second prob and 1 set current state to third state
-    # return current state
+
 simulate()
 
 print(statesVisited, totalReward)
