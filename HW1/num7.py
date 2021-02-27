@@ -1,0 +1,80 @@
+import random
+
+# initialize states of the MRP
+stateDict = {"Class 1":
+                 {"Facebook":[(0, 0.5), -1], "Class 2":[(0.5,1), -2]},
+             "Class 2":
+                 {"Sleep":[(0, 0.2), 0], "Class 3":[(0.2, 1), -2]},
+             "Class 3":
+                 {"Pass": [(0, 0.6), 10], "Pub": [(0.4, 1), 1]},
+             "Pass":
+                 {"Sleep": [(0,1),0]},
+             "Pub":
+                 {"Class 1": [(0, 0.2), -2], "Class 2": [(0.2, 0.6), -2], "Class 3": [(0.6, 1), -2]},
+             "Facebook":
+                 {"Facebook": [(0, 0.9), -1], "Class 1": [(0.9, 1), -2]}
+             }
+
+# intialize episodic reward counter
+global totalReward
+totalReward = 0
+
+
+def nextState(currentState):
+    """
+    determines the next state using a generated random number and the probabilities in the stateDict
+    updates the total episode reward by updating global totalReward
+    :param currentState: String, the current state of the process, one of the keys of stateDict
+    :return:
+    """
+    global totalReward
+    randomNum = random.random()
+
+    for k, v in stateDict[currentState].items():
+        if v[0][0] <= randomNum < v[0][1]:
+            totalReward += v[1]
+            return k
+
+
+# initialize state tracker list
+global statesVisited
+statesVisited = ["Class 1"]
+
+
+def simulate():
+    """
+    simulates the student MRP using the nextState function
+    :return:
+    """
+    currentState = "Class 1"
+    while currentState != "Sleep":
+        currentState = nextState(currentState)
+        statesVisited.append(currentState)
+
+    # check current state
+    # generate a random number
+    # if the number is between 0 and first prob set current state to first state
+        #
+    # if number is between first prob and second prob set current state to second state
+    # if number is between second prob and 1 set current state to third state
+    # return current state
+simulate()
+print(statesVisited, totalReward)
+
+"""
+Episode 1:
+States: ['Class 1', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Class 1', 'Facebook', 'Facebook', 'Facebook', 'Class 1', 'Facebook', 'Class 1', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Class 1', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Class 1', 'Class 2', 'Class 3', 'Pub', 'Class 2', 'Class 3', 'Pass', 'Sleep']
+Total Reward: -37
+"""
+
+"""
+Episode 2:
+States: ['Class 1', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Class 1', 'Class 2', 'Class 3', 'Pass', 'Sleep']
+Total Reward: -4
+"""
+
+"""
+Episode 3:
+States: ['Class 1', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Class 1', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Facebook', 'Class 1', 'Facebook', 'Facebook', 'Class 1', 'Facebook', 'Class 1', 'Class 2', 'Class 3', 'Pub', 'Class 2', 'Class 3', 'Pass', 'Sleep'] 
+Total Reward: -45
+"""
