@@ -51,7 +51,7 @@ def print_v(v):
         table.add_row([i+1, "%.1f" % v[i+1]])
     print(table)
 
-v_3 = policyEval(policy,P,R,gamma,theta,3)
+v_3 = policyEval(policy,P,R,gamma,theta,1e8)
 print('k=3')
 print_v(v_3)
 

@@ -44,7 +44,9 @@ for i in range(14):
 theta = 1e-6
 gamma = 1
 
-optimal_policy, optimal_value = policyIteration(P,R,gamma,theta,initial_policy)
+
+
+optimal_policy, optimal_value = policyIteration(P, R, gamma, theta, initial_policy)
 
 print('optimal policy')
 table = PrettyTable(['state', 'left','up','right','down'])

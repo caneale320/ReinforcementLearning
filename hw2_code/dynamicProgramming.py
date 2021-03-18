@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def policyEval(policy, P, R, gamma, theta, max_iter=1000):
+def policyEval(policy, P, R, gamma, theta, max_iter=1000000):
     """
     This function implements the policy evaluation algorithm (the synchronous
     version) 
@@ -72,7 +72,7 @@ for some reason i couldn't get this function to converge. It oscillates between 
 another policy, without seeming to converge.
 """
 
-def policyIteration(P,R,gamma,theta,initial_policy,max_iter=3):
+def policyIteration(P,R,gamma,theta,initial_policy,max_iter=1000000):
     """
     This function implements the policy iteration algorithm.
     It returns the final policy and the corresponding state value function v.
@@ -92,7 +92,7 @@ def policyIteration(P,R,gamma,theta,initial_policy,max_iter=3):
     return policy, v
 
 
-
+# I think this works but is really slow due to nested for loops: need to go back and vectorize calculations if time
 def valueIteration(P,R,gamma,theta,initial_v,max_iter=1e8):
     """
     This function implements the value iteration algorithm (the in-place version).
@@ -108,7 +108,7 @@ def valueIteration(P,R,gamma,theta,initial_v,max_iter=1e8):
     best_actions = [0] * num_states
 
     delta = 0
-    for k in range(max_iter):
+    for k in range(int(max_iter)):
         for s in range(num_states):
             old_value = v[s]
 
