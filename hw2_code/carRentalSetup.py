@@ -6,7 +6,7 @@ def get_prob_and_reward(morning_cars, evening_cars, returnMean, requestMean,
                         revenue, max_cars):
     """
     Compute transition probability and reward for one location, given #cars
-    in the morning and in the evenening
+    in the morning and in the evening
     """                
     threshold = min(15,max_cars) # probability of getting a number greater than the threshold is 0
     
@@ -23,15 +23,15 @@ def get_prob_and_reward(morning_cars, evening_cars, returnMean, requestMean,
         for returned in range(threshold):
                 if evening_cars == get_evening_cars(morning_cars,
                                                     requested, 
-                                                    returned,max_cars):
+                                                    returned, max_cars):
                     prob_temp = prob_requests[requested] * prob_returns[returned]
                     prob += prob_temp
-                    reward += revenue * min(morning_cars,requested) * prob_temp
-    
+                    reward += revenue * min(morning_cars, requested) * prob_temp
+
     if prob != 0:
         reward = reward / prob
     
-    return prob,reward
+    return prob, reward
 
 
 def get_evening_cars(morning_cars,requested,returned,max_cars):
@@ -81,7 +81,13 @@ def get_P_and_R(requestMean1, requestMean2, returnMean1, returnMean2,
                 # calculate number of cars availble next morning
                 morning_cars1 = int(min(num_cars1 - num_moved, max_cars))
                 morning_cars2 = int(min(num_cars2 + num_moved, max_cars))
-            
+
+                if morning_cars1 > 10:
+                    R[s,a] -= -((morning_cars1 - 10)*4)
+                if morning_cars2 > 10:
+                    R[s,a] -= -((morning_cars2 - 10)*4)
+                if num_moved > 0:
+                    R[s,a] += 2
                 for s_next in range(num_states):
                     evening_cars1, evening_cars2 = stateSpace[s_next].astype(int)
                     prob1 = P1[morning_cars1,evening_cars1]
