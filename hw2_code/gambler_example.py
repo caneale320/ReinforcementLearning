@@ -12,13 +12,13 @@ def get_P_and_R_gambler(prob_head):
         R[i,:,100] = 1
         for j in range(i+1):
             if j != 0:
-                if i+j<101:
+                if i+j <= 100:
                     P[i,j,i+j] = prob_head
                 else:
                     P[i, j, 100] = prob_head
 
                 if i-j >= 0:
-                    P[i,j,i-j] = 1-prob_head
+                    P[i,j,i-j] = 1 - prob_head
                 else:
                     P[i, j, 0] = 1 - prob_head
 
@@ -30,15 +30,15 @@ def get_P_and_R_gambler(prob_head):
 # initial value function
 initial_v = np.zeros(101)
 initial_v[0] = 0
-initial_v[-1]=1
+initial_v[-1]= 1
 
 gamma = 1
 theta = 1e-6
-ph = 0.25
+ph = 0.4
 
 P, R = get_P_and_R_gambler(ph) 
 
-opt_actions,opt_v = valueIteration(P,R,gamma,theta,initial_v,50)
+opt_actions, opt_v = valueIteration(P, R, gamma, theta, initial_v, 1e8)
 
 plt.figure(figsize=(8,12))
 plt.subplot(211)
