@@ -35,30 +35,24 @@ def TD_n(get_episode, policy, initial_v, n, gamma, alpha,num_episodes = 1):
 # The function returns the estimate of v
     def n_step_return(tau, n, T, rewards):
         G = 0
-        for i in range(tau + 1, min((tau + n), T)):
+        for i in range(tau + 1, min((tau + n + 1), T)):
             G = G + gamma**(i-tau-1) * rewards[i]
         return G
 
     # initialization
     v = np.copy(initial_v)
-    
+
     for episode in range(num_episodes):
-        t = 0
         states, actions, rewards = get_episode(policy)
         T = len(states) - 1
 
         for t in range(T):
-            tau = t - n + 1
-            if tau >= 0:
-                G = n_step_return(tau, n, T, rewards)
-                if tau + n < T:
-                    G = G + gamma**n*v[states[tau + n]]
-                v[states[tau]] = v[states[tau]] + alpha*(G - v[states[tau]])
-            if tau == T - 1:
-                break
+            G = n_step_return(t, n, T, rewards)
+            if t + n < T:
+                G = G + gamma ** n * v[states[t + n]]
+            v[states[t]] = v[states[t]] + alpha * (G - v[states[t]])
 
     return v
-
 
 def TD_lambda(get_episode, policy, initial_v, lambda_, gamma, alpha,
               num_episodes=1):
@@ -74,10 +68,16 @@ def TD_lambda(get_episode, policy, initial_v, lambda_, gamma, alpha,
               
     # initialization 
     v = np.copy(initial_v)
-    
-    """
-    Your Code
-    """
+    e = np.zeros(len(v))
+    for episode in range(num_episodes):
+        states, actions, rewards = get_episode(policy)
+        delta = 0
+        for i in range(len(states) - 1):
+            delta = rewards[i] + gamma*v[states[i + 1]] - v[states[i]]
+            e[states[i]] = e[states[i]] + 1
+            for s in range(len(v)):
+                v[s] = v[s] + alpha * delta * e[s]
+                e[s] = gamma*lambda_*e[s]
 
     return v
 

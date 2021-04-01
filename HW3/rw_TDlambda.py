@@ -12,7 +12,7 @@ num_episodes = 10
 runs = 20 # 20 repetitions 
 
 alphas = np.arange(0,1.1,0.1)
-lambdas = [0.4,0.8,0.9,0.95]
+lambdas = [0, 0.4,0.8,0.9,0.95]
 errors = np.zeros((len(lambdas),len(alphas)))
 
 for run in range(runs):   

@@ -14,7 +14,7 @@ num_episodes = 10
 alphas = np.arange(0,1.1,0.1)
 runs = 20 # we will have 20 repetitions instead of 100 as in the textbook
 
-steps = np.power(2, np.arange(4)) # n = 1,2,4,8
+steps = np.power(2, np.arange(8)) # n = 1,2,4,8
 errors = np.zeros((len(steps),len(alphas)))
 
 for run in range(runs):   
